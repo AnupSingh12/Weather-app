@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './App.css';
 
 const App = () => {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
 
   const API_KEY = '06c4a78708c85c1c2d654a7e892c419c';
+
   const fetchWeather = async () => {
     try {
       const response = await axios.get(
@@ -23,27 +25,37 @@ const App = () => {
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-      <h1>Weather App</h1>
-      <input
-        type="text"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        placeholder="Enter city name"
-        style={{ padding: '10px', width: '200px' }}
-      />
-      <button onClick={handleSearch} style={{ padding: '10px', marginLeft: '10px' }}>
-        Search
-      </button>
-      {weather && (
-        <div style={{ marginTop: '20px' }}>
-          <h2>{weather.name}</h2>
-          <p>Temperature: {weather.main.temp}°C</p>
-          <p>Condition: {weather.weather[0].description}</p>
-          <p>Humidity: {weather.main.humidity}%</p>
-          <p>Wind Speed: {weather.wind.speed} m/s</p>
-        </div>
-      )}
+    <div className="app-container">
+      <h1 className="app-title">Weather App</h1>
+      <div className="weather-card">
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          placeholder="Enter city name"
+          className="weather-input"
+        />
+        <button onClick={handleSearch} className="weather-button">
+          Search
+        </button>
+        {weather && (
+          <div className="weather-info">
+            <h2 className="weather-city">{weather.name}</h2>
+            <p className="weather-detail">
+              <strong>Temperature:</strong> {weather.main.temp}°C
+            </p>
+            <p className="weather-detail">
+              <strong>Condition:</strong> {weather.weather[0].description}
+            </p>
+            <p className="weather-detail">
+              <strong>Humidity:</strong> {weather.main.humidity}%
+            </p>
+            <p className="weather-detail">
+              <strong>Wind Speed:</strong> {weather.wind.speed} m/s
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
